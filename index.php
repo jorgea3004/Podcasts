@@ -3,6 +3,7 @@ ini_set("memory_limit","100M");
 ini_set("max_execution_time",36000);
 require_once('generaPodcasts.php');
 require_once('readXmlFeedPodcasts.php');
+require_once('funciones.php');
 $flagSave = true;
 $base = '/jorge/';
 $dir = $base.'Podcasts/';
@@ -92,7 +93,7 @@ echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Desafora2');
 
 $contenido_xml = "";
 $blogs=array();
-$blogs[] = array('fernanda','Fernanda Tapia');
+//$blogs[] = array('fernanda','Fernanda Tapia');
 $blogs[] = array('pada','Capitan Pada y sus monitos');
 $blogs[] = array('fragshampoo','Fragancia Shampoo');
 $blogs[] = array('trujo','Trujo');
@@ -124,7 +125,7 @@ if($feedContent && !empty($feedContent)):
 			     	$fmp3 = $item->enclosure['url'];
 			     	$datea = explode("/", $fmp3);
 			     	$a = $datea[count($datea)-1];
-			     	$localFile = $img_path . $a;
+			     	$localFile = $img_path . limpiaAcentos($a);
 			     	if (!file_exists($localFile)) {
 			     		if (!file_exists($img_path)) {
 				     		if(!mkdir($img_path,0777,true)){

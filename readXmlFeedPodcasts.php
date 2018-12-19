@@ -1,5 +1,4 @@
 <?php
-
 function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo){
 	$html = '';
 	$feedContent = conectByCurl($feedUrl);
@@ -15,30 +14,7 @@ function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo){
 			$fecha2a = explode(" ", $fecha2);
 			$dias = resta_fechas($fecha1a[0],$fecha2a[0]);
 			if($dias > -16){
-	   			$fmp3 = strtolower($item->title);
-	   			$fmp3 = str_replace('_', '', $fmp3);
-	   			$fmp3 = str_replace(' ', '_', $fmp3);
-	   			$fmp3 = str_replace('á', 'a', $fmp3);
-	   			$fmp3 = str_replace('é', 'e', $fmp3);
-	   			$fmp3 = str_replace('í', 'i', $fmp3);
-	   			$fmp3 = str_replace('ó', 'o', $fmp3);
-	   			$fmp3 = str_replace('ú', 'u', $fmp3);
-	   			$fmp3 = str_replace('ñ', 'n', $fmp3);
-	   			$fmp3 = str_replace(':', '', $fmp3);
-	   			$fmp3 = str_replace(',', '', $fmp3);
-	   			$fmp3 = str_replace("'", '-', $fmp3);
-	   			$fmp3 = str_replace('"', '', $fmp3);
-	   			$fmp3 = str_replace('*', '', $fmp3);
-	   			$fmp3 = str_replace('+', '', $fmp3);
-	   			$fmp3 = str_replace('~', '-', $fmp3);
-	   			$fmp3 = str_replace('#', '', $fmp3);
-	   			$fmp3 = str_replace('!', '', $fmp3);
-	   			$fmp3 = str_replace('¡', '', $fmp3);
-	   			$fmp3 = str_replace('¿', '', $fmp3);
-	   			$fmp3 = str_replace('?', '', $fmp3);
-	   			$fmp3 = str_replace('·', '-', $fmp3);
-
-
+	   			$fmp3 = limpiaAcentos(strtolower($item->title));
 			    $pod = $item->enclosure['url'];
 			    $apod = explode("?", $pod);
 			    if( count($apod)>1 ){
