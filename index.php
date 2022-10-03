@@ -5,7 +5,7 @@ require_once('generaPodcasts.php');
 require_once('readXmlFeedPodcasts.php');
 require_once('funciones.php');
 $flagSave = true;
-$base = '/jorge/';
+$base = '/';
 $dir = $base.'Podcasts/';
 $dirpods = $base.'musik/';
 $dirCopy = $base.'downloads/';
@@ -33,7 +33,7 @@ if(!file_exists($dir) || !file_exists($dirpods)){
 /****************************************/
 /*	Proceso para feed disparamargot     */
 /****************************************/
-
+/*
 $contenido_xml = "";
 $idblog = 'disparamargot';
 $subDir = 'Dispara, Margot, dispara/';
@@ -77,7 +77,7 @@ if($feedContent && !empty($feedContent)):
    </ul>
    <?php endif; ?>
  <?php endif; ?>
- <?php 
+ <?php */
 
 /****************************************/
 /*	    Proceso para feed desafora2     */
@@ -87,10 +87,14 @@ $subDir = 'desafora2/';
 $feedUrl = "http://desafora2.libsyn.com/rss/"; 
 echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Desafora2');
 
+$subDir = 'farandula021/';
+$feedUrl = "https://feeds.acast.com/public/shows/farandula021";
+echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Farandula21');
+
 /****************************************/
 /*        Proceso para feed dixo        */
 /****************************************/
-
+/*
 $contenido_xml = "";
 $blogs=array();
 //$blogs[] = array('fernanda','Fernanda Tapia');
@@ -151,13 +155,13 @@ if($feedContent && !empty($feedContent)):
    </ul>
    <?php endif; ?>
  <?php endif;
-
+*/
 /****************************************/
 /*        Proceso para feed Revolver    */
 /****************************************/
 $subDir = 'revolver/';
 $feedUrl = "http://revolver.dixo.libsynpro.com/rss/"; 
-echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Revolver');
+//echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Revolver');
 
 /****************************************/
 /*	Proceso para feed Capitan Pada     */
@@ -165,7 +169,7 @@ echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Revolver');
 
 $subDir = 'Capitan Pada y sus monitos/';
 $feedUrl = "http://mx.ivoox.com/es/capitan-pada-sus-monitos_fg_f1560540_filtro_1.xml";
-echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Capitan Pada');
+//echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Capitan Pada');
 
 generaListaPodcasts($dir);
 ?>
