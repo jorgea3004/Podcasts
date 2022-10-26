@@ -120,9 +120,9 @@ function generaListaPodcasts($directorioPodcasts){
 		$mp3m3u .= str_replace('/', '\\', $item) . $sep;
 	}
 
-	$myfile = fopen("/jorge/musik/podcasts.m3u", "w");
+	/*$myfile = fopen("/jorge/musik/podcasts.m3u", "w");
 	fwrite($myfile, $mp3m3u);
-	fclose($myfile);
+	fclose($myfile);*/
 }
 /*
 $dir ='/jorge/Podcasts/';

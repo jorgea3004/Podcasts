@@ -7,18 +7,18 @@ require_once('funciones.php');
 $flagSave = true;
 $base = '/';
 $dir = $base.'Podcasts/';
-$dirpods = $base.'musik/';
+$dirpods = $base.'musica/';
 $dirCopy = $base.'downloads/';
 $totalNuevos = 0;
 if(!file_exists($dir) || !file_exists($dirpods)){
-	if(!mkdir($dir,0777,true))//Se crea la carpeta de imagenes
+	if(!mkdir($dir,0777,true))//Se crea la carpeta
 	{
 		echo "Error: Al crear directorio"; exit();
 	}
 
-	if(!mkdir($dirpods,0777,true))//Se crea la carpeta de imagenes
+	if(!mkdir($dirpods,0777,true))//Se crea la carpeta de
 	{
-		echo "Error: Al crear directorio Musik"; exit();
+		echo "Error: Al crear directorio ".$dirpods; exit();
 	}
 }
 ?>
@@ -90,6 +90,10 @@ echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Desafora2');
 $subDir = 'farandula021/';
 $feedUrl = "https://feeds.acast.com/public/shows/farandula021";
 echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Farandula21');
+
+$subDir = 'programar-es-mierda/';
+$feedUrl = "https://www.ivoox.com/podcast-programar-es-mierda_fg_f1432444_filtro_1.xml";
+echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'programar-es-mierda');
 
 /****************************************/
 /*        Proceso para feed dixo        */
