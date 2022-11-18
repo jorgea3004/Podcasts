@@ -13,7 +13,7 @@ function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo,$flagFileNam
 			$fecha1a = explode(" ", $fecha1);
 			$fecha2a = explode(" ", $fecha2);
 			$dias = resta_fechas($fecha1a[0],$fecha2a[0]);
-			//if($dias > -16){
+			if($dias > -31){
 			    $pod = $item->enclosure['url'];
 	   			$fmp3 = limpiaAcentos(strtolower($item->title));
 				if ($flagFileName==0) {
@@ -66,7 +66,7 @@ function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo,$flagFileNam
 					}
 		     	 	$html .= "<li>" . $txt . ": ".$localFile ."</li>";
 		     	}
-			//}
+			}
 		endforeach;
 		$html .='</ul>';
 	endif; 
