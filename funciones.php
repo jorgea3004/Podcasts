@@ -27,6 +27,7 @@ function limpiaAcentos($cadena){
 	$fmp3 = str_replace('¿', '', $fmp3);
 	$fmp3 = str_replace('?', '', $fmp3);
 	$fmp3 = str_replace('·', '-', $fmp3);
+	$fmp3 = str_replace('_|_', '-', $fmp3);
 	return $fmp3;
 }
 ?>

@@ -1,5 +1,5 @@
 <?php
-function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo){
+function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo,$flagFileName){
 	$html = '';
 	$feedContent = conectByCurl($feedUrl);
 	if($feedContent && !empty($feedContent)):
@@ -13,9 +13,17 @@ function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo){
 			$fecha1a = explode(" ", $fecha1);
 			$fecha2a = explode(" ", $fecha2);
 			$dias = resta_fechas($fecha1a[0],$fecha2a[0]);
-			if($dias > -16){
-	   			$fmp3 = limpiaAcentos(strtolower($item->title));
+			//if($dias > -16){
 			    $pod = $item->enclosure['url'];
+	   			$fmp3 = limpiaAcentos(strtolower($item->title));
+				if ($flagFileName==0) {
+					$pod1 = explode("/", $pod);
+					$nmFile = $pod1[count($pod1)-1];
+					$nmFile = str_replace('.mp3', '', $nmFile);
+					$nmFile = str_replace('.m4a', '', $nmFile);
+		   			$fmp3 = limpiaAcentos(strtolower($nmFile));
+				}
+			
 			    $apod = explode("?", $pod);
 			    if( count($apod)>1 ){
 			    	$arch = $apod[0];
@@ -34,6 +42,8 @@ function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo){
 
 		     	$localFile = $dir . $subDir . $fmp3.".".$ext;
 
+		     	//echo $arch . " -> " . $localFile . "<br>";
+
 		     	if (!file_exists($localFile)) {
 		     		if (!file_exists($dir . $subDir)) {
 			     		if(!mkdir($dir . $subDir,0777,true)){
@@ -47,6 +57,7 @@ function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo){
 							copy($arch, $localFile);
 						    if (file_exists($localFile)) {
 								copy($localFile, $dirCopy.$fmp3.".".$ext);
+								unlink($dirCopy.$fmp3.".".$ext);
 						    }
 					    }
 					    //$totalNuevos++;
@@ -55,7 +66,7 @@ function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo){
 					}
 		     	 	$html .= "<li>" . $txt . ": ".$localFile ."</li>";
 		     	}
-			}
+			//}
 		endforeach;
 		$html .='</ul>';
 	endif; 
