@@ -101,8 +101,6 @@ $subDir = 'hermanos-de-leche/';
 $feedUrl = "https://www.spreaker.com/show/5337194/episodes/feed";
 echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'hermanos-de-leche',0);
 
-
-
 /****************************************/
 /*        Proceso para feed dixo        */
 /****************************************/

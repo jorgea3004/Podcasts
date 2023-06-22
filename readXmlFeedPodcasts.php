@@ -5,7 +5,7 @@ function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo,$flagFileNam
 	if($feedContent && !empty($feedContent)):
 	    $feedXml = @simplexml_load_string($feedContent);
 
-	    $html .= '<h3>Del Blog '.$titulo.'</h3><ul>';
+	    $html .= '<h3>Del Blog '.$titulo.'</h3><ol>';
 	    foreach($feedXml->channel->item as $item):
 			$dateComplete = strtotime($item->pubDate);
 			$fecha1 = date('d-m-Y H:i:s',$dateComplete);
@@ -13,7 +13,7 @@ function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo,$flagFileNam
 			$fecha1a = explode(" ", $fecha1);
 			$fecha2a = explode(" ", $fecha2);
 			$dias = resta_fechas($fecha1a[0],$fecha2a[0]);
-			if($dias > -31){
+			if($dias > -91){
 			    $pod = $item->enclosure['url'];
 	   			$fmp3 = limpiaAcentos(strtolower($item->title));
 				if ($flagFileName==0) {
@@ -68,7 +68,7 @@ function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo,$flagFileNam
 		     	}
 			}
 		endforeach;
-		$html .='</ul>';
+		$html .='</ol>';
 	endif; 
 	return $html;
 }
