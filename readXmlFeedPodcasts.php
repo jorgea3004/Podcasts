@@ -13,38 +13,38 @@ function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo,$flagFileNam
 			$fecha1a = explode(" ", $fecha1);
 			$fecha2a = explode(" ", $fecha2);
 			$dias = resta_fechas($fecha1a[0],$fecha2a[0]);
+		    $pod = $item->enclosure['url'];
+   			$fmp3 = limpiaAcentos(strtolower($item->title));
+			if ($flagFileName==0) {
+				$pod1 = explode("/", $pod);
+				$nmFile = $pod1[count($pod1)-1];
+				$nmFile = str_replace('.mp3', '', $nmFile);
+				$nmFile = str_replace('.m4a', '', $nmFile);
+	   			$fmp3 = limpiaAcentos(strtolower($nmFile));
+			}
+		
+		    $apod = explode("?", $pod);
+		    if( count($apod)>1 ){
+		    	$arch = $apod[0];
+		    } else {
+		     	$arch = $pod;
+		    }
+		    $podext = $item->enclosure['type'];
+		    if ($podext=='audio/x-m4a') {
+		    	$ext = 'm4a';
+		    } else {
+		    	$ext = 'mp3';
+		    }
+
+		    $spod = explode("/", $arch);
+		    $archloc = $spod[count($spod)-1];
+
+	     	$localFile = $dir . $subDir . $fmp3.".".$ext;
+
+
+			//echo $arch . " -> " . $localFile . "<br>";
 			if($dias > -91){
-			    $pod = $item->enclosure['url'];
-	   			$fmp3 = limpiaAcentos(strtolower($item->title));
-				if ($flagFileName==0) {
-					$pod1 = explode("/", $pod);
-					$nmFile = $pod1[count($pod1)-1];
-					$nmFile = str_replace('.mp3', '', $nmFile);
-					$nmFile = str_replace('.m4a', '', $nmFile);
-		   			$fmp3 = limpiaAcentos(strtolower($nmFile));
-				}
-			
-			    $apod = explode("?", $pod);
-			    if( count($apod)>1 ){
-			    	$arch = $apod[0];
-			    } else {
-			     	$arch = $pod;
-			    }
-			    $podext = $item->enclosure['type'];
-			    if ($podext=='audio/x-m4a') {
-			    	$ext = 'm4a';
-			    } else {
-			    	$ext = 'mp3';
-			    }
-
-			    $spod = explode("/", $arch);
-			    $archloc = $spod[count($spod)-1];
-
-		     	$localFile = $dir . $subDir . $fmp3.".".$ext;
-
-		     	//echo $arch . " -> " . $localFile . "<br>";
-
-		     	if (!file_exists($localFile)) {
+	    		if (!file_exists($localFile)) {
 		     		if (!file_exists($dir . $subDir)) {
 			     		if(!mkdir($dir . $subDir,0777,true)){
 			     			$html .= "No se puede crear directorio.";
@@ -62,7 +62,7 @@ function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo,$flagFileNam
 					    }
 					    //$totalNuevos++;
 					}else{
-					    $txt = "Copy failed";
+					    $txt = "Copy failed [".$arch."] ";
 					}
 		     	 	$html .= "<li>" . $txt . ": ".$localFile ."</li>";
 		     	}
@@ -71,5 +71,26 @@ function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo,$flagFileNam
 		$html .='</ol>';
 	endif; 
 	return $html;
+}
+function download_file($url, $path) {
+	echo $url . " -> " . $path . "<br>";
+
+  $newfilename = $path;
+  $file = fopen ($url, "rb");
+  if ($file) {
+    $newfile = fopen ($newfilename, "wb");
+
+    if ($newfile)
+    while(!feof($file)) {
+      fwrite($newfile, fread($file, 1024 * 8 ), 1024 * 8 );
+    }
+  }
+
+  if ($file) {
+    fclose($file);
+  }
+  if ($newfile) {
+    fclose($newfile);
+  }
 }
 ?>
