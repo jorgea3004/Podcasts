@@ -114,7 +114,7 @@ function xml2array($contents, $get_attributes = 1, $priority = 'tag'){
     }
     return ($xml_array);
 }
-function readItunesXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo,$flagFileName){
+function readItunesXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo,$flagFileName,$daysToReveview){
     $html = '<h3>Del Blog '.$titulo.'</h3><ol>';
     $feedContent = conectByCurl($feedUrl);
     $xmlArray = xml2array($feedContent, $get_attributes = 3, $priority = 'tag'); // it will work 100% if not ping me @skype: sapan.mohannty
@@ -135,7 +135,7 @@ function readItunesXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo,$flagF
         $fecha1a = explode(" ", $fecha1);
         $fecha2a = explode(" ", $fecha2);
         $dias = resta_fechas($fecha1a[0],$fecha2a[0]);
-        if($dias > -71){
+        if($dias > $daysToReveview){
             $pod = $item['enclosure_attr']['url'];
             $fmp3 = limpiaAcentos(strtolower($item['title']));
             if ($flagFileName==0) {

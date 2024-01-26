@@ -6,7 +6,7 @@ require_once('readXmlFeedPodcasts.php');
 require_once('readItunesXmlFeedPodcasts.php');
 require_once('funciones.php');
 $flagSave = true;
-$base = '/xampp/downloads/';
+$base = '/';
 $dir = $base.'Podcasts/';
 $dirpods = $base.'musica/';
 $dirCopy = $base.'downloads/';
@@ -32,29 +32,46 @@ if(!file_exists($dirCopy)){
 <body>
    <h2>Actualizaci&oacute;n Podcasts:</h2>
 <?php
+$days = -91;
 $subDir = 'farandula021/';
 $feedUrl = "https://feeds.acast.com/public/shows/farandula021";
-//echo readItunesXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Farandula21',1);
+echo readItunesXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Farandula21',1,$days);
+
+$subDir = 'que-quieres-que-te-ponga/';
+$feedUrl = 'https://www.ivoox.com/feed_fg_f138594_filtro_1.xml';
+//echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Que-quieres-que-te-ponga',0,0);
+
+$subDir = 'ponte-a-prueba/';
+$feedUrl = 'https://www.ivoox.com/feed_fg_f1598_filtro_1.xml';
+//echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Ponte a Prueba',0,0);
+
+$subDir = 'Sexo-Al-Aire/';
+$feedUrl = 'https://www.ivoox.com/feed_fg_f1141094_filtro_1.xml';
+//echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Sexo Al Aire',0,0);
+
+$subDir = 'Rincon-Erotico/';
+$feedUrl = 'https://www.ivoox.com/feed_fg_f135812_filtro_1.xml';
+//echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Rincón Erótico',0,0);
 
 $subDir = 'Nerdcore-Podcast/';
 $feedUrl = "https://media.rss.com/nerdcore-podcast/feed.xml";
-//echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Nerdcore-Podcast',0);
+//echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'Nerdcore-Podcast',0,$days);
 
 $subDir = 'programar-es-mierda/';
 $feedUrl = "https://www.ivoox.com/podcast-programar-es-mierda_fg_f1432444_filtro_1.xml";
-echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'programar-es-mierda',0);
+//echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'programar-es-mierda',0,$days);
 
 $subDir = 'hermanos-de-leche/';
 $feedUrl = "https://www.spreaker.com/show/5337194/episodes/feed";
-//echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'hermanos-de-leche',0);
+//echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'hermanos-de-leche',0,$days);
 
 $subDir = 'azcarate-al-oido/';
 $feedUrl = "https://www.spreaker.com/show/4813631/episodes/feed";
-//echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'azcarate-al-oido',0);
+//echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'azcarate-al-oido',0,$days);
 
 $subDir = 'All-Ears-English/';
 $feedUrl = "https://feeds.megaphone.fm/allearsenglish";
-//echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'allearsenglish',1);
+//echo readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,'allearsenglish',1,$days);
 
 //generaListaPodcasts($dir);
 ?>

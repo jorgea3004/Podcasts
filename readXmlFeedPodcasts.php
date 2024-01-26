@@ -1,5 +1,5 @@
 <?php
-function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo,$flagFileName){
+function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo,$flagFileName,$daysToReview){
 	$html = '';
 	$feedContent = conectByCurl($feedUrl);
 	if($feedContent && !empty($feedContent)):
@@ -43,30 +43,55 @@ function readXmlFeedPodcasts($dir,$subDir,$feedUrl,$dirCopy,$titulo,$flagFileNam
 
 
 			//echo $arch . " -> " . $localFile . "<br>";
-			if($dias > -91){
-	    		if (!file_exists($localFile)) {
-		     		if (!file_exists($dir . $subDir)) {
-			     		if(!mkdir($dir . $subDir,0777,true)){
-			     			$html .= "No se puede crear directorio.";
-			     		}
-			     	}
-			     	$txt='';
-					if ( copy($arch, $localFile) ) {
-					    $txt = "Copy success";
-					    if (file_exists($localFile)) {
-							copy($arch, $localFile);
+	     	if($daysToReview==0){
+		    		if (!file_exists($localFile)) {
+			     		if (!file_exists($dir . $subDir)) {
+				     		if(!mkdir($dir . $subDir,0777,true)){
+				     			$html .= "No se puede crear directorio.";
+				     		}
+				     	}
+				     	$txt='';
+						if ( copy($arch, $localFile) ) {
+						    $txt = "Copy success";
 						    if (file_exists($localFile)) {
-								copy($localFile, $dirCopy.$fmp3.".".$ext);
-								unlink($dirCopy.$fmp3.".".$ext);
+								copy($arch, $localFile);
+							    if (file_exists($localFile)) {
+									copy($localFile, $dirCopy.$fmp3.".".$ext);
+									unlink($dirCopy.$fmp3.".".$ext);
+							    }
 						    }
-					    }
-					    //$totalNuevos++;
-					}else{
-					    $txt = "Copy failed [".$arch."] ";
+						    //$totalNuevos++;
+						}else{
+						    $txt = "Copy failed [".$arch."] ";
+						}
+			     	 	$html .= "<li>" . $txt . ": ".$localFile ."</li>";
+			     	}
+	     	} else {
+					if($dias > $daysToReview){
+			    		if (!file_exists($localFile)) {
+				     		if (!file_exists($dir . $subDir)) {
+					     		if(!mkdir($dir . $subDir,0777,true)){
+					     			$html .= "No se puede crear directorio.";
+					     		}
+					     	}
+					     	$txt='';
+							if ( copy($arch, $localFile) ) {
+							    $txt = "Copy success";
+							    if (file_exists($localFile)) {
+									copy($arch, $localFile);
+								    if (file_exists($localFile)) {
+										copy($localFile, $dirCopy.$fmp3.".".$ext);
+										unlink($dirCopy.$fmp3.".".$ext);
+								    }
+							    }
+							    //$totalNuevos++;
+							}else{
+							    $txt = "Copy failed [".$arch."] ";
+							}
+				     	 	$html .= "<li>" . $txt . ": ".$localFile ."</li>";
+				     	}
 					}
-		     	 	$html .= "<li>" . $txt . ": ".$localFile ."</li>";
-		     	}
-			}
+				}
 		endforeach;
 		$html .='</ol>';
 	endif; 
